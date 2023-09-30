@@ -1,0 +1,17 @@
+moviepy
+pydub
+sentencepiece
+transformers
+torch
+soundfile
+torchaudio
+easyocr
+opencv-python
+pillow
+pandas
+textblob
+nltk
+librosa
+PyMuPDF
+requests
+bs4
