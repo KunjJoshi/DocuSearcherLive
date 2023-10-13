@@ -22,6 +22,3 @@ def processText(dataset, textfile):
   df=pd.concat([df, row], axis=0)
   df.to_csv(dataset, index=False)
   return data
-
-data=processText('Dataset.csv','FoodText.txt')
-data

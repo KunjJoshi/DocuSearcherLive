@@ -33,7 +33,7 @@ def processdocs(dataset, docpath):
 
 
 example_doc_list=[f"Workforce/{file}" for file in os.listdir('Workforce')]
-
+print(example_doc_list)
 for file in example_doc_list:
     print(f'Starting to process {file}')
     processdocs('Dataset.csv',file)
