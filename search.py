@@ -16,11 +16,11 @@ def makeSearch(query, opfilename):
                 results.append(resdict)
         data=f'\t\tFound Results for Query: {query}'
         for result in results:
-            data=data+'Found Query in File: '+result['Path']+'\t Found Text in File: '+result['Text']+'\tFound Query at Position: '+result['Position']+'\t\n'
+            data=data+'Found Query in File: '+str(result['Path'])+'\t Found Text in File: '+str(result['Text'])+'\tFound Query at Position: '+str(result['Position'])+'\t\n'
         googleLinks=getGooglePages(query)
         data=data+'\n\t\tFound Some More results for you from Google. FOllow the below given links: \n'
         for link in googleLinks:
-            data=data+' '+link+'\n'
+            data=data+' '+str(link)+'\n'
         with open(opfilename,'w') as file:
             file.write(data)
         return 'Search Results Found'
