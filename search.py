@@ -1,9 +1,10 @@
 from googlelinkbringer import getGooglePages
 import pandas as pd
 import webbrowser
-
+import os
 
 def search(search_term):
+    curr_dir=os.path.dirname(__file__)
     i=0
     search_results=[]
     df=pd.read_csv('Dataset.csv')
@@ -17,6 +18,7 @@ def search(search_term):
                 searchdict={}
                 searchdict['result']=i
                 searchdict['path']=allpaths[j]
+                searchdict['pathhref']='file:///'+os.path.join(curr_dir, allpaths[j])
                 searchdict['position']=t
                 excerpt='...'
                 if t>=1:
@@ -121,7 +123,7 @@ def search(search_term):
         card_content=f"""
                 <div class="card">
                     <p class="card-heading"><strong> Result {res['result']}</strong></p>
-                    <p class="text"><strong>Path to Result:</strong> {res['path']}</p>
+                    <a href="{res['pathhref']}"class="text"><strong>Path to Result:</strong> {res['path']}</a>
                      <p class="text"><strong>Result found at Position</strong>:{res['position']}</p>
                      <p class="text"><strong>Excerpt:</strong> {res['excerpt']}</p>
                 </div>
@@ -153,7 +155,9 @@ def search(search_term):
     output_file=f"{search_term}Results.html"
     with open(output_file, 'w') as f:
         f.write(html_content)
-    openfile=f"file:///D:/DataPit%20Search/{output_file}"
+    curr_dir=os.path.dirname(__file__)
+    file=os.path.join(curr_dir, output_file)
+    openfile='file:///'+file
     webbrowser.open(openfile)
 
 
