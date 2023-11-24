@@ -19,7 +19,7 @@ def get_pdf_text(pdf_path):
     page=pdf.load_page(pageno)
     text=page.get_text()
     pdftext.append(text)
-  print(pdftext)
+  #print(pdftext)
   return pdftext
 
 

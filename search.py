@@ -35,7 +35,7 @@ def search(search_term):
     for link in links:
         linker=link.split('.')
         linkdict={}
-        linkdict['name']=linker[1]
+        linkdict['name']=linker[0]
         linkdict['href']=link
         dicoflinks.append(linkdict)
     html_content="""
