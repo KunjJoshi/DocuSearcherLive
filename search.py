@@ -30,7 +30,8 @@ def search(search_term):
                 excerpt=excerpt+'...'
                 searchdict['excerpt']=excerpt
                 search_results.append(searchdict)
-    links=getGooglePages(search_term)
+    #links=getGooglePages(search_term)
+    links=[]
     dicoflinks=[]
     for link in links:
         linker=link.split('.')
