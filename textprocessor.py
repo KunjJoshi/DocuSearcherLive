@@ -9,16 +9,29 @@ Original file is located at
 
 import pandas as pd
 from textblob import TextBlob
+from pdfprocessor import autocorrect
 
 def processText(dataset, textfile):
   df=pd.read_csv(dataset)
-  allpaths=df['Path']
-  alltexts=df['Text']
+  paths=list(df['Path'])
+  texts=list(df['Text'])
+  pages=list(df['PageNo'])
+  frames=list(df['FrameNo'])
+  columns=list(df['Column'])
+  lines=list(df['LineNo'])
   with open(textfile,'r') as f:
-    data=f.read()
-  data=str(data)
-  new_row={'Path':[textfile], 'Text':[str(data)]}
-  row=pd.DataFrame(new_row)
-  df=pd.concat([df, row], axis=0)
+    textdata=f.read()
+  textdata=str(textdata)
+  textdata=textdata.split('\n')
+  for i in range(len(textdata)):
+    paths.append(textfile)
+    texts.append(textdata[i])
+    pages.append(None)
+    frames.append(None)
+    columns.append(None)
+    lines.append(i)
+  data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'Column':columns, 'LineNo':lines, 'Text':texts}
+  df=pd.DataFrame(data)
   df.to_csv(dataset, index=False)
-  return data
+  
+

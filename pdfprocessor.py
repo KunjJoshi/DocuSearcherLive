@@ -44,3 +44,34 @@ def processpdf(dataset, pdf_path):
   df=pd.concat([df,row], axis=0)
   df.to_csv(dataset, index=False)
   return corrected_text
+
+def get_text_from_page(pdf, pageno):
+  doc=fitz.open(pdf)
+  page=doc.load_page(pageno)
+  text=page.get_text()
+  pagedict={}
+  pagedict['pageno']=pageno
+  pagedict['text']=text
+  return pagedict
+
+def processpdfpagewise(dataset, pdf_path):
+  df=pd.read_csv(dataset)
+  paths=list(df['Path'])
+  texts=list(df['Text'])
+  pages=list(df['PageNo'])
+  frames=list(df['FrameNo'])
+  columns=list(df['Column'])
+  lines=list(df['LineNo'])
+  doc=fitz.open(pdf_path)
+  for pageno in range(len(doc)):
+    text_on_page=get_text_from_page(pdf_path, pageno)
+    corrected_text=autocorrect(text_on_page['text'])
+    paths.append(pdf_path)
+    texts.append(corrected_text)
+    pages.append(text_on_page['pageno'])
+    frames.append(None)
+    columns.append(None)
+    lines.append(None)
+  data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'Column':columns, 'LineNo':lines, 'Text':texts}
+  df=pd.DataFrame(data)
+  df.to_csv(dataset, index=False)
