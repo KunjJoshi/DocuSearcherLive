@@ -11,15 +11,15 @@ import easyocr
 from PIL import Image
 import pandas as pd
 from textblob import TextBlob
+import pytesseract
+
+pytesseract.pytesseract.tesseract_cmd='/usr/bin/tesseract'
+custom_config=r'--oem 3 --psm 6 -l eng'
 
 def get_image_text(image_path):
-  reader=easyocr.Reader(['en'], gpu=True)
-  text=reader.readtext(image_path)
-  fulltext=''
-  for t in text:
-    t=list(t)
-    fulltext=fulltext+t[1].lower()+ ' '
-  return fulltext
+  img=Image.open(image_path)
+  text=pytesseract.image_to_string(img, config=custom_config)
+  return text
 
 def autocorrect(txt):
   correct_text=TextBlob(txt).correct()
@@ -29,10 +29,22 @@ def autocorrect(txt):
 
 def image_processing(dataset, image_path):
   df=pd.read_csv(dataset)
+  paths=list(df['Path'])
+  texts=list(df['Text'])
+  pages=list(df['PageNo'])
+  lines=list(df['LineNo'])
+  frames=list(df['FrameNo'])
+  columns=list(df['Column'])
+  print('Starting Image Processing')
   img_text=get_image_text(image_path)
   corrected_text=autocorrect(img_text)
-  new_row={'Path':[image_path], 'Text':[corrected_text]}
-  row=pd.DataFrame(new_row)
-  df=pd.concat([df,row], axis=0)
+  paths.append(image_path)
+  texts.append(corrected_text)
+  pages.append(None)
+  lines.append(None)
+  frames.append(None)
+  columns.append(None)
+  data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'LineNo':lines, 'Column':columns, 'Text':texts}
+  df=pd.DataFrame(data)
   df.to_csv(dataset, index=False)
-  return corrected_text
+  return df.tail()

@@ -33,5 +33,6 @@ def processText(dataset, textfile):
   data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'Column':columns, 'LineNo':lines, 'Text':texts}
   df=pd.DataFrame(data)
   df.to_csv(dataset, index=False)
+  return df.tail()
   
 

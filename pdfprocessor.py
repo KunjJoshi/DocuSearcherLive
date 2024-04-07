@@ -65,13 +65,18 @@ def processpdfpagewise(dataset, pdf_path):
   doc=fitz.open(pdf_path)
   for pageno in range(len(doc)):
     text_on_page=get_text_from_page(pdf_path, pageno)
-    corrected_text=autocorrect(text_on_page['text'])
-    paths.append(pdf_path)
-    texts.append(corrected_text)
-    pages.append(text_on_page['pageno'])
-    frames.append(None)
-    columns.append(None)
-    lines.append(None)
+    textval=text_on_page['text']
+    tlist=textval.split('\n')
+    for i in range(len(tlist)):
+      text=tlist[i]
+      corrtext=autocorrect(text)
+      paths.append(pdf_path)
+      pages.append(text_on_page['pageno'])
+      lines.append(i)
+      texts.append(corrtext)
+      frames.append(None)
+      columns.append(None)
   data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'Column':columns, 'LineNo':lines, 'Text':texts}
   df=pd.DataFrame(data)
   df.to_csv(dataset, index=False)
+  return df.tail()

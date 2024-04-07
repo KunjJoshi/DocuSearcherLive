@@ -18,38 +18,48 @@ import os
 import cv2
 import pandas as pd
 from textblob import TextBlob
+import pytesseract
+from PIL import Image
+
+pytesseract.pytesseract.tesseract_cmd='/usr/bin/tesseract'
+custom_config=r'--oem 3 --psm 6 -l eng'
 
 def convert_mp4_to_images(video_path):
   output_path='outputframes/'
   os.makedirs(output_path, exist_ok=True)
   cap=cv2.VideoCapture(video_path)
   frames=0
+  framelist=[]
   while True:
     ret,frame=cap.read()
     if not ret:
       break
     imgname=os.path.join(output_path, f'frameno{frames:04d}.jpg')
     cv2.imwrite(imgname, frame)
-    print(f'Saved Frame No{frames} at {imgname}')
+    #print(f'Saved Frame No{frames} at {imgname}')
     frames=frames+1
+    framelist.append(imgname)
   cap.release()
   print(f"Total Saved Frames: {frames}")
-  return output_path
+  return framelist
 
-def get_unique_text_list(imgfolder):
+def get_unique_text_list(img_files):
   alltexts=[]
-  reader=easyocr.Reader(['en'], gpu=True)
-  img_files=[f"{imgfolder}/{file}" for file in os.listdir(imgfolder)]
+  frameout=[]
   print(len(img_files))
   for i in range(len(img_files)):
-    text=reader.readtext(img_files[i])
-    print(f"Processed Image {i}")
-    for val in text:
-      val=list(val)
-      text=val[1]
-      alltexts.append(text)
-  utl=list(set(alltexts))
-  return utl
+    framedict={}
+    file=img_files[i]
+    img=Image.open(file)
+    text=pytesseract.image_to_string(img, config=custom_config)
+    corrtext=autocorrect(text)
+    if corrtext not in alltexts:
+      framedict['frameno']=i
+      framedict['text']=corrtext
+      alltexts.append(corrtext)
+      frameout.append(framedict)
+    print(f'Completed frame {i}')
+  return frameout
 
 
 def create_vid_text(utl):
@@ -93,30 +103,55 @@ def autocorrect(text):
 
 def video_process(dataset, video_path):
   df=pd.read_csv(dataset)
-  imgfolder=convert_mp4_to_images(video_path)
-  lot=get_unique_text_list(imgfolder)
-  text=create_vid_text(lot)
-  corrected_text=autocorrect(text)
-  new_row={'Path':[video_path], 'Text':[corrected_text]}
-  row=pd.DataFrame(new_row)
-  df=pd.concat([df,row], axis=0)
+  paths=list(df['Path'])
+  texts=list(df['Text'])
+  frames=list(df['FrameNo'])
+  pages=list(df['PageNo'])
+  lines=list(df['LineNo'])
+  columns=list(df['Column'])
+  framelist=convert_mp4_to_images(video_path)
+  lot=get_unique_text_list(framelist)
+  for frame in lot:
+    paths.append(video_path)
+    frames.append(frame['frameno'])
+    texts.append(frame['text'])
+    pages.append(None)
+    columns.append(None)
+    lines.append(None)
+  
   vidaud=get_mp4_audio(video_path)
   refaud=refine_audio(vidaud)
   vidtext=eng_transcribe(refaud)
   corrected_text=autocorrect(vidtext)
-  new_row={'Path':[video_path], 'Text':[corrected_text]}
-  row=pd.DataFrame(new_row)
-  df=pd.concat([df,row], axis=0)
+  paths.append(video_path)
+  texts.append(corrected_text)
+  pages.append(None)
+  columns.append(None)
+  lines.append(None)
+  frames.append(None)
+  data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'LineNo':lines, 'Column':columns, 'Text':texts}
+  df=pd.DataFrame(data)
   df.to_csv(dataset, index=False)
-  return corrected_text
+  return df.tail()
 
 def audio_process(dataset, audiofile):
   df=pd.read_csv(dataset)
+  paths=list(df['Path'])
+  texts=list(df['Text'])
+  frames=list(df['FrameNo'])
+  pages=list(df['PageNo'])
+  lines=list(df['LineNo'])
+  columns=list(df['Column'])
   refaud=refine_audio(audiofile)
   audtext=eng_transcribe(refaud)
   corrected_text=autocorrect(audtext)
-  new_row={'Path':[audiofile], 'Text':[corrected_text]}
-  row=pd.DataFrame(new_row)
-  df=pd.concat([df,row], axis=0)
+  paths.append(audiofile)
+  texts.append(corrected_text)
+  pages.append(None)
+  columns.append(None)
+  lines.append(None)
+  frames.append(None)
+  data={'Path':paths, 'PageNo':pages, 'FrameNo':frames, 'LineNo':lines, 'Column':columns, 'Text':texts}
+  df=pd.DataFrame(data)
   df.to_csv(dataset, index=False)
-  return corrected_text
+  return df.tail()
