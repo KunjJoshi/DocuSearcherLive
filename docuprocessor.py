@@ -33,11 +33,7 @@ def processdocs(dataset, docpath):
             print(text)
 
 
-example_doc_list=[f"WorkForce/{file}" for file in os.listdir('WorkForce')]
-print(example_doc_list)
-for file in example_doc_list:
-    print(f'Starting to process {file}')
-    processdocs('Dataset.csv',file)
-    print(f'Finished Processing {file}')
+filename='D://Datapit Search/WorkForce/jobsec.pdf'
+processdocs('Dataset.csv', filename)
 
 

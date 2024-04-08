@@ -61,55 +61,9 @@ def refine_search(search_res):
             continue
     return refinedres
 
-def create_card_content(res):
-    content=f"""
-                <div class="card">
-            """
-    path=res['path']
-    element_list=res['search']
-    start=f"""
-                    <a href="{res['pathhref']}"class="card-heading"><strong>Path to Result:</strong> {res['path']}</a>
-    """
-    content=content+'\n'+start
-    button_start="""
-    <ul class="collapsible-list">
-        <button class="collapsible-button" onclick="toggleCollapsible(event)">Toggle List</button>
-        <div class="collapsible-content">
-                """
-    ext=os.path.splitext(os.path.basename(path))[-1]
-    content=content+'\n'+button_start
-    for element in element_list:
-            keys=list(element.keys())
-            for key in keys:
-                if type(element[key])==list:
-                    if ext in ['.pdf']:
-                        app=''
-                        for value in element[key]:
-                            for childkey, childvalue in value.items():
-                                app=app+'\t'+str(childkey)+' '+str(childvalue)
-                    else:
-                        app=''
-                        for value in element[key]:
-                            for childkey, childvalue in value.items():
-                                app=app+f'\t{str(childvalue)}'
-
-                else:
-                    app=str(element[key])
-                print(app)
-                if ext in ['.xlsx', '.xls', '.csv']:
-                    keystring=f'Found at Column {str(key)} : {app}'
-                else:
-                    keystring=f'Found at {str(key)} : {app}'
-                listel='<li> '+keystring+'</li>'
-                content=content+'\n'+listel
-    end=f"""
-      </div>
-    </ul>
-    </div>
-    """
-    content=content+'\n'+end
-    return content
 def search(search_term):
+    search_terms=search_term.split(' ')
+    print(search_terms)
     curr_dir=os.path.dirname(__file__)
     i=0
     search_results=[]
@@ -130,7 +84,7 @@ def search(search_term):
                   value=textdict[key]
                   vallist=value.split(' ')
                   for val in vallist:
-                      if str(search_term).lower() in str(val).lower() or str(search_term)==str(val):
+                      if any(str(st).lower() in str(val).lower() or str(st).lower()==str(val).lower() for st in search_terms):
                           i=i+1
                           searchdict={}
                           searchdict['result']=i
@@ -144,7 +98,7 @@ def search(search_term):
         else:
           textlist=str(alltexts[j]).split(' ')
           for t in range(len(textlist)):
-              if str(search_term).lower() in str(textlist[t]).lower() or str(search_term)==str(textlist[t]):
+              if any(str(st).lower() in str(textlist[t]).lower() or str(st).lower()==str(textlist[t]).lower() for st in search_terms):
                   i=i+1
                   searchdict={}
                   searchdict['result']=i
@@ -166,8 +120,6 @@ def search(search_term):
                       searchdict['frameno']=resframe
                   search_results.append(searchdict)
     search_results=refine_search(search_results)
-    with open('search.json','w') as file:
-        json.dump(search_results, file, indent=5)
     links=getGooglePages(search_term)
     #links=[]
     dicoflinks=[]
@@ -180,154 +132,12 @@ def search(search_term):
         linkdict['name']=linker
         linkdict['href']=link
         dicoflinks.append(linkdict)
-    html_content="""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Search Results for """+str(search_term)+""" </title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-        body, h1, h2, p, ul, li {
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .heading {
-            font-size: 30px;
-            margin-bottom: 5px;
-            margin-left: auto;
-            margin-right: auto;
-            color:#000000;
-            font-family: sans-serif;
-            font-weight: bold;
-        }
-        .writtentext {
-            font-size: 16px;
-            margin-bottom: 2px;
-            color:#f7f7f7;
-            font-family: sans-serif;
-        }
-        .card-container{
-          display: flex;
-          flex-direction: column;
-          margin: 10px;
-          padding: 20px;
-        }
-        .card{
-          background-color: antiquewhite;
-          margin-right: 10px;
-          margin-left: 10px;
-          margin-bottom: 10px;
-          padding: 20px;
-          border-radius: 10px;
-          box-shadow: 2px 2px 2px 2px #000000;
-        }
-
-        .link-container{
-          display: flex;
-          flex-direction: column;
-          margin: 10px;
-          padding: 20px;
-        }
-
-        .list-links{
-            list-style-type: square;
-        }
-        .link-element{
-            margin: 10px 0;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 2px 2px #000000;
-            background-color: antiquewhite;
-            font-weight: bolder;
-        }
-        .card-heading{
-            margin: 0 auto;
-        }
-        .collapsible-list {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-    .collapsible-content {
-    display: none;
-    background-color: antiquewhite; /* Background color similar to card */
-    margin: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 2px 2px #000000; 
-    }
-
-    .collapsible-button {
-    background-color: #eee;
-    color: #333;
-    cursor: pointer;
-    padding: 10px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none; 
-    }
-
-   .collapsible-button:hover {
-    background-color: #ccc;
-    }
-
-    </style>
-    </head>
-    <body>
-        <div class="heading">
-            <p class="heading">Search Results for """ + str(search_term) +""" </p>
-        </div>
-                    <div class="card-container">
-    """
-    for res in search_results:
-        card_content=create_card_content(res)
-        html_content=html_content+'\n'+card_content
-    html_content=html_content+"""
-            </div>
-            <div class="link-container">
-                <div class="heading">
-                <p class="heading">
-                    We have also searched the Web for a few good links for you
-                </p>
-                </div>
-                <ul class="list-links">
-    """
-    for alink in dicoflinks:
-        linkcontent=f"""
-        <li class="link-element"><a href="{alink['href']}">{alink['name']}</a></li>
-        """
-        html_content=html_content+'\n'+linkcontent
-    html_content=html_content+"""
-                </ul>
-            </div>
-    <script>
-       function toggleCollapsible(event) {
-       var content = event.target.nextElementSibling;
-       content.style.display === 'none' ? content.style.display = 'block' : content.style.display = 'none';
-    }
-</script>
-    </body>
-</html>
-    """
-    #print(html_content)
-    output_file=f"{search_term}Results.html"
+    output={}
+    output['search']=search_results
+    output['google']=dicoflinks
+    output_file=f"searchjson/{search_term}Results.json"
     with open(output_file, 'w') as f:
-        f.write(html_content)
-    curr_dir=os.path.dirname(__file__)
-    file=os.path.join(curr_dir, output_file)
-    openfile='file:///'+file
-    webbrowser.open(openfile)
+        json.dump(output, f, indent=5)
 
 
 input_term=input('Enter Input Term: ')

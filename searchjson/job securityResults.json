@@ -1,0 +1,72 @@
+{
+     "search": [
+          {
+               "path": "WorkForce/NEU Fall24.xlsx",
+               "pathhref": "file:///D:\\DataPit Search\\WorkForce/NEU Fall24.xlsx",
+               "search": [
+                    {
+                         "Program": [
+                              {
+                                   "row": "row_68"
+                              }
+                         ]
+                    }
+               ]
+          },
+          {
+               "path": "WorkForce/NEUvsUCDvsUMA.csv",
+               "pathhref": "file:///D:\\DataPit Search\\WorkForce/NEUvsUCDvsUMA.csv",
+               "search": [
+                    {
+                         "Factor": [
+                              {
+                                   "row": "row_7"
+                              }
+                         ]
+                    }
+               ]
+          }
+     ],
+     "google": [
+          {
+               "name": "wikipedia",
+               "href": "https://en.wikipedia.org/wiki/Job_security"
+          },
+          {
+               "name": "monster",
+               "href": "https://www.monster.com/career-advice/article/job-security-pay-raise-0929"
+          },
+          {
+               "name": "qualtrics",
+               "href": "https://www.qualtrics.com/au/experience-management/employee/job-security/"
+          },
+          {
+               "name": "betterup",
+               "href": "https://www.betterup.com/blog/job-security-stability"
+          },
+          {
+               "name": "growthspace",
+               "href": "https://www.growthspace.com/glossary/job-security"
+          },
+          {
+               "name": "cambridge",
+               "href": "https://dictionary.cambridge.org/dictionary/english/job-security"
+          },
+          {
+               "name": "collinsdictionary",
+               "href": "https://www.collinsdictionary.com/dictionary/english/job-security"
+          },
+          {
+               "name": "indeed",
+               "href": "https://www.indeed.com/career-advice/career-development/job-security"
+          },
+          {
+               "name": "wikipedia",
+               "href": "https://en.wikipedia.org/wiki/Job_security#:~:text=Job%20security%20is%20the%20probability,small%20chance%20of%20losing%20it."
+          },
+          {
+               "name": "org/2022/09/job-insecurity-harms-both-employees-and-employers",
+               "href": "https://hbr.org/2022/09/job-insecurity-harms-both-employees-and-employers"
+          }
+     ]
+}
