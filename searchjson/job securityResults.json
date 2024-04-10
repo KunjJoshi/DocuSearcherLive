@@ -1,26 +1,254 @@
 {
+     "term": "job security",
      "search": [
           {
-               "path": "WorkForce/NEU Fall24.xlsx",
-               "pathhref": "file:///D:\\DataPit Search\\WorkForce/NEU Fall24.xlsx",
+               "path": "D://Datapit Search/WorkForce/jobsec.pdf",
+               "pathhref": "file:///D://Datapit Search/WorkForce/jobsec.pdf",
                "search": [
                     {
-                         "Program": [
+                         "pageno2.0": [
                               {
-                                   "row": "row_68"
+                                   "line": 11.0,
+                                   "text": "He construct indicator of the perception of job security for various types of jobs in 12 ",
+                                   "similarity": 0.5167501621704599
                               }
-                         ]
-                    }
-               ]
-          },
-          {
-               "path": "WorkForce/NEUvsUCDvsUMA.csv",
-               "pathhref": "file:///D:\\DataPit Search\\WorkForce/NEUvsUCDvsUMA.csv",
-               "search": [
-                    {
-                         "Factor": [
+                         ],
+                         "pageno5.0": [
                               {
-                                   "row": "row_7"
+                                   "line": 16.0,
+                                   "text": "\u201cobjective\u201d job security. But differently, workers\u2019 assessment about their job security are \u201ccorrect\u201d.",
+                                   "similarity": 0.6689625304957969
+                              },
+                              {
+                                   "line": 26.0,
+                                   "text": "Fifth, the gap in perceived job security between public sector and other job types, which can",
+                                   "similarity": 0.5167501621704599
+                              }
+                         ],
+                         "pageno6.0": [
+                              {
+                                   "line": 12.0,
+                                   "text": "Measuring perceptions of job security",
+                                   "similarity": 0.5797386715376658
+                              },
+                              {
+                                   "line": 19.0,
+                                   "text": "The wording of job security questions",
+                                   "similarity": 0.5797386715376658
+                              }
+                         ],
+                         "pageno9.0": [
+                              {
+                                   "line": 8.0,
+                                   "text": "insecurity. He begin with basic bivariate correlation between job security and job protection; we",
+                                   "similarity": 0.5167501621704598
+                              },
+                              {
+                                   "line": 11.0,
+                                   "text": "A raw measure of job security",
+                                   "similarity": 0.5797386715376658
+                              }
+                         ],
+                         "pageno11.0": [
+                              {
+                                   "line": 35.0,
+                                   "text": "facilitate the comparison of job security between job types.",
+                                   "similarity": 0.6417645565491049
+                              }
+                         ],
+                         "pageno12.0": [
+                              {
+                                   "line": 20.0,
+                                   "text": "sharply reduces perceived job security in temporary jobs, which are most exposed to the risk of",
+                                   "similarity": 0.5167501621704599
+                              }
+                         ],
+                         "pageno13.0": [
+                              {
+                                   "line": 17.0,
+                                   "text": "Second, the banking of job types in terms of the strength of the correlation between job security",
+                                   "similarity": 0.5167501621704598
+                              },
+                              {
+                                   "line": 22.0,
+                                   "text": "for temporary job holders. Given the large differences across job types in \u201cobjective\u201d job security",
+                                   "similarity": 0.5568173714556132
+                              },
+                              {
+                                   "line": 25.0,
+                                   "text": "the assessment they make of their own job security.",
+                                   "similarity": 0.5797386715376658
+                              }
+                         ],
+                         "pageno14.0": [
+                              {
+                                   "line": 0.0,
+                                   "text": "the sentiment of job security\u2014may strive to select themselves into objective \u201csafer\u201d jobs, e.g.",
+                                   "similarity": 0.5167501621704597
+                              },
+                              {
+                                   "line": 2.0,
+                                   "text": "unobserved determining of job security\u2014 is a handicap in job search. Consequently, workers with",
+                                   "similarity": 0.5167501621704598
+                              },
+                              {
+                                   "line": 8.0,
+                                   "text": "different attitudes toward job security.",
+                                   "similarity": 0.5023287782256719
+                              }
+                         ],
+                         "pageno15.0": [
+                              {
+                                   "line": 9.0,
+                                   "text": "A statistical model of job security",
+                                   "similarity": 0.5797386715376658
+                              },
+                              {
+                                   "line": 18.0,
+                                   "text": "explaining individual perceptions of job security.",
+                                   "similarity": 0.5023287782256719
+                              },
+                              {
+                                   "line": 20.0,
+                                   "text": "Step 1: A decomposition of job security",
+                                   "similarity": 0.5797386715376658
+                              },
+                              {
+                                   "line": 21.0,
+                                   "text": "The job security equation.",
+                                   "similarity": 0.7092972666062739
+                              }
+                         ],
+                         "pageno16.0": [
+                              {
+                                   "line": 30.0,
+                                   "text": "The job security equation (1) implies that the conditional distribution of reported job security sit",
+                                   "similarity": 0.6348087971775132
+                              }
+                         ],
+                         "pageno18.0": [
+                              {
+                                   "line": 24.0,
+                                   "text": "of the sequence of reported job security values. His can be derived from the job security equation",
+                                   "similarity": 0.6689625304957969
+                              }
+                         ],
+                         "pageno19.0": [
+                              {
+                                   "line": 31.0,
+                                   "text": "Step 2: Analysis of job security indicator",
+                                   "similarity": 0.5023287782256719
+                              },
+                              {
+                                   "line": 33.0,
+                                   "text": "The individual/job type elects i in our job security equation (1) resect the impact",
+                                   "similarity": 0.5167501621704599
+                              },
+                              {
+                                   "line": 43.0,
+                                   "text": "Construction of summary indicator of job security.",
+                                   "similarity": 0.5023287782256719
+                              }
+                         ],
+                         "pageno20.0": [
+                              {
+                                   "line": 56.0,
+                                   "text": "Explaining job security.",
+                                   "similarity": 0.7092972666062739
+                              }
+                         ],
+                         "pageno21.0": [
+                              {
+                                   "line": 20.0,
+                                   "text": "structural model of job security.",
+                                   "similarity": 0.5797386715376658
+                              }
+                         ],
+                         "pageno23.0": [
+                              {
+                                   "line": 22.0,
+                                   "text": "their job security, and (2) workers reporting a low level of satisfaction with their job security really",
+                                   "similarity": 0.6348087971775132
+                              }
+                         ],
+                         "pageno24.0": [
+                              {
+                                   "line": 20.0,
+                                   "text": "His is the gap between average reported job security for a job of type e \u2208 E as perceived by",
+                                   "similarity": 0.5499883949217763
+                              },
+                              {
+                                   "line": 21.0,
+                                   "text": "workers in employment state e and the average job security for that same job type e as perceived",
+                                   "similarity": 0.5167501621704598
+                              }
+                         ],
+                         "pageno25.0": [
+                              {
+                                   "line": 19.0,
+                                   "text": "components of perceived job security.",
+                                   "similarity": 0.5797386715376658
+                              }
+                         ],
+                         "pageno27.0": [
+                              {
+                                   "line": 10.0,
+                                   "text": "erect for temporary jobs). But its erect on perceived job security in public jobs is strongly positive",
+                                   "similarity": 0.5366542691151157
+                              }
+                         ],
+                         "pageno28.0": [
+                              {
+                                   "line": 22.0,
+                                   "text": "generous UIB are more worried about their job security.",
+                                   "similarity": 0.5023287782256719
+                              }
+                         ],
+                         "pageno29.0": [
+                              {
+                                   "line": 3.0,
+                                   "text": "The impact of EPL and UIB on job security",
+                                   "similarity": 0.5023287782256719
+                              }
+                         ],
+                         "pageno30.0": [
+                              {
+                                   "line": 17.0,
+                                   "text": "\u201cbeing an insider\u201d to \u201cholding a permanent, public job\u201d. The differential in perceived job security",
+                                   "similarity": 0.5167501621704598
+                              }
+                         ],
+                         "pageno31.0": [
+                              {
+                                   "line": 23.0,
+                                   "text": "EPL and job security.",
+                                   "similarity": 0.7092972666062739
+                              }
+                         ],
+                         "pageno38.0": [
+                              {
+                                   "line": 41.0,
+                                   "text": "repression of reported job security \u2212\u2192s i against (\u2212\u2192x i, \u2212\u2192e i) and a class index i according to the job security",
+                                   "similarity": 0.6689625304957969
+                              }
+                         ],
+                         "pageno42.0": [
+                              {
+                                   "line": 209.0,
+                                   "text": "the job security equation (1)1",
+                                   "similarity": 0.7092972666062739
+                              }
+                         ],
+                         "pageno45.0": [
+                              {
+                                   "line": 28.0,
+                                   "text": "Figure 2: raw job security and EPL",
+                                   "similarity": 0.5023287782256719
+                              },
+                              {
+                                   "line": 58.0,
+                                   "text": "Figure 3: raw job security and UIB",
+                                   "similarity": 0.5023287782256719
                               }
                          ]
                     }
@@ -28,10 +256,6 @@
           }
      ],
      "google": [
-          {
-               "name": "wikipedia",
-               "href": "https://en.wikipedia.org/wiki/Job_security"
-          },
           {
                "name": "monster",
                "href": "https://www.monster.com/career-advice/article/job-security-pay-raise-0929"
@@ -41,20 +265,20 @@
                "href": "https://www.qualtrics.com/au/experience-management/employee/job-security/"
           },
           {
-               "name": "betterup",
-               "href": "https://www.betterup.com/blog/job-security-stability"
-          },
-          {
                "name": "growthspace",
                "href": "https://www.growthspace.com/glossary/job-security"
           },
           {
-               "name": "cambridge",
-               "href": "https://dictionary.cambridge.org/dictionary/english/job-security"
-          },
-          {
                "name": "collinsdictionary",
                "href": "https://www.collinsdictionary.com/dictionary/english/job-security"
+          },
+          {
+               "name": "org/2022/09/job-insecurity-harms-both-employees-and-employers",
+               "href": "https://hbr.org/2022/09/job-insecurity-harms-both-employees-and-employers"
+          },
+          {
+               "name": "cambridge",
+               "href": "https://dictionary.cambridge.org/dictionary/english/job-security"
           },
           {
                "name": "indeed",
@@ -65,8 +289,12 @@
                "href": "https://en.wikipedia.org/wiki/Job_security#:~:text=Job%20security%20is%20the%20probability,small%20chance%20of%20losing%20it."
           },
           {
-               "name": "org/2022/09/job-insecurity-harms-both-employees-and-employers",
-               "href": "https://hbr.org/2022/09/job-insecurity-harms-both-employees-and-employers"
+               "name": "betterup",
+               "href": "https://www.betterup.com/blog/job-security-stability"
+          },
+          {
+               "name": "wikipedia",
+               "href": "https://en.wikipedia.org/wiki/Job_security"
           }
      ]
 }

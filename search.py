@@ -4,6 +4,7 @@ import webbrowser
 import os
 import ast
 import json
+from textsimilarity import calculate_cosine_similarity
 
 def refine_search(search_res):
     curr_dir=os.path.dirname(__file__)
@@ -22,6 +23,8 @@ def refine_search(search_res):
                 if ext in ['.txt','.doc','.docx']:
                     linedict={}
                     linedict['line']=search_res[index]['lineno']
+                    linedict['text']=search_res[index]['text']
+                    linedict['similarity']=search_res[index]['similarity']
                     if linedict not in searchlist:
                       searchlist.append(linedict)
                 
@@ -30,16 +33,20 @@ def refine_search(search_res):
                     pagenolist=[search_res[i]['pageno'] for i in pathindices]
                     pagenolist=list(set(pagenolist))
                     for pageno in pagenolist:
-                        linenums=[search['lineno'] for search in search_res if search['path']==path and search['pageno']==pageno]
-                        linenums=list(set(linenums))
-                        linenums=[{'line':no} for no in linenums]
-                        pdfdict[f'pageno{pageno}']=linenums
+                        linenums=[{'line':search['lineno'],'text':search['text'], 'similarity':search['similarity']} for search in search_res if search['path']==path and search['pageno']==pageno]
+                        cleanednums=[]
+                        for num in linenums:
+                            if num not in cleanednums:
+                                cleanednums.append(num)
+                        pdfdict[f'pageno{pageno}']=cleanednums
                     if pdfdict not in searchlist:
                       searchlist.append(pdfdict)
                 
                 if ext in ['.aud', '.mp3', '.mp4', '.wav']:
                     movdict={}
                     movdict['frame']=search_res[index]['frameno']
+                    movdict['text']=search_res[index]['text']
+                    movdict['similarity']=search_res[index]['similarity']
                     if movdict not in searchlist:
                       searchlist.append(movdict)
                 
@@ -48,10 +55,11 @@ def refine_search(search_res):
                     cols=[search_res[i]['column'] for i in pathindices]
                     cols=list(set(cols))
                     for col in cols:
-                        rows=[search['row'] for search in search_res if search['path']==path and search['column']==col]
-                        rows=list(set(rows))
-                        rows=[{'row':row} for row in rows]
-                        tabdict[col]=rows
+                        rows=[{'row':search['row'], 'text':search['text'], 'similarity':search['similarity']} for search in search_res if search['path']==path and search['column']==col]
+                        cleanedrows=[]
+                        for row in rows:
+                            cleanedrows.append(row)
+                        tabdict[col]=cleanedrows
                     if tabdict not in searchlist:
                       searchlist.append(tabdict)
             searchdict['search']=searchlist
@@ -62,8 +70,6 @@ def refine_search(search_res):
     return refinedres
 
 def search(search_term):
-    search_terms=search_term.split(' ')
-    print(search_terms)
     curr_dir=os.path.dirname(__file__)
     i=0
     search_results=[]
@@ -82,9 +88,7 @@ def search(search_term):
               textkeys=list(textdict.keys())
               for key in textkeys:
                   value=textdict[key]
-                  vallist=value.split(' ')
-                  for val in vallist:
-                      if any(str(st).lower() in str(val).lower() or str(st).lower()==str(val).lower() for st in search_terms):
+                  if search_term.strip().lower() in str(value).strip().lower() or search_term.strip().lower()==str(value).strip().lower() or str(value).strip().lower() in search_term.strip().lower():
                           i=i+1
                           searchdict={}
                           searchdict['result']=i
@@ -92,13 +96,16 @@ def search(search_term):
                           searchdict['pathhref']='file:///'+os.path.join(curr_dir, allpaths[j])
                           searchdict['column']=columns[j]
                           searchdict['row']=key
-                          search_results.append(searchdict)
+                          searchdict['text']=textdict[key]
+                          sim=calculate_cosine_similarity(searchdict['text'], search_term)
+                          searchdict['similarity']=sim
+                          print(sim)
+                          if sim>0.55:
+                               search_results.append(searchdict)
             except:
                 continue
         else:
-          textlist=str(alltexts[j]).split(' ')
-          for t in range(len(textlist)):
-              if any(str(st).lower() in str(textlist[t]).lower() or str(st).lower()==str(textlist[t]).lower() for st in search_terms):
+              if search_term.strip().lower() in str(alltexts[j]).strip().lower() or search_term.strip().lower() == str(alltexts[j]).strip().lower() or str(alltexts[j]).strip().lower() in search_term.strip().lower() :
                   i=i+1
                   searchdict={}
                   searchdict['result']=i
@@ -108,17 +115,31 @@ def search(search_term):
                   if extension in ['.txt','.doc','.docx']:
                       resline=lines[j]
                       searchdict['lineno']=resline
+                      searchdict['text']=alltexts[j]
+                      sim=calculate_cosine_similarity(searchdict['text'], search_term)
+                      searchdict['similarity']=sim
+                      if sim>0.5:
+                            search_results.append(searchdict)
                 
                   if extension in ['.pdf']:
                       respage=pages[j]
                       resline=lines[j]
                       searchdict['pageno']=respage
                       searchdict['lineno']=resline
+                      searchdict['text']=alltexts[j]
+                      sim=calculate_cosine_similarity(searchdict['text'], search_term)
+                      searchdict['similarity']=sim
+                      if sim>0.5:
+                            search_results.append(searchdict)
                 
                   if extension in ['.mp4','.mp3','.aud','.wav']:
                       resframe=frames[j]
                       searchdict['frameno']=resframe
-                  search_results.append(searchdict)
+                      searchdict['text']=alltexts[j]
+                      sim=calculate_cosine_similarity(searchdict['text'], search_term)
+                      searchdict['similarity']=sim
+                      if sim>0.5:
+                            search_results.append(searchdict)
     search_results=refine_search(search_results)
     links=getGooglePages(search_term)
     #links=[]
@@ -133,6 +154,7 @@ def search(search_term):
         linkdict['href']=link
         dicoflinks.append(linkdict)
     output={}
+    output['term']=search_term
     output['search']=search_results
     output['google']=dicoflinks
     output_file=f"searchjson/{search_term}Results.json"

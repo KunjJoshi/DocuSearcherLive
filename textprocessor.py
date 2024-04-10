@@ -19,7 +19,7 @@ def processText(dataset, textfile):
   frames=list(df['FrameNo'])
   columns=list(df['Column'])
   lines=list(df['LineNo'])
-  with open(textfile,'r') as f:
+  with open(textfile,'r', encoding='utf-8') as f:
     textdata=f.read()
   textdata=str(textdata)
   textdata=textdata.split('\n')

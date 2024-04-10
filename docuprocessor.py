@@ -33,7 +33,7 @@ def processdocs(dataset, docpath):
             print(text)
 
 
-filename='D://Datapit Search/WorkForce/jobsec.pdf'
+filename='D://Datapit Search/WorkForce/terrorist.txt'
 processdocs('Dataset.csv', filename)
 
 
